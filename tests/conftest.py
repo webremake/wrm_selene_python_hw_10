@@ -10,5 +10,6 @@ def browser_control():
     browser.config.window_width = '1024'
     browser.config.window_height = '768'
     browser.config.timeout = 6.0
+
     yield
-    ...
+    browser.quit()

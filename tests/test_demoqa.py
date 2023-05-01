@@ -1,6 +1,6 @@
 from selene import browser, have, be
 from selenium.webdriver import Keys
-import os
+from os.path import abspath, dirname
 
 
 def test_student_registration_form():
@@ -52,10 +52,10 @@ def test_student_registration_form():
     browser.element('[for="hobbies-checkbox-2"]').should(be.clickable).click()
 
     # field Picture
-    browser.element('#uploadPicture').send_keys(os.getcwd() + r'\gl.jpg')
+    browser.element('#uploadPicture').send_keys(dirname(abspath(__file__)) + r'\resources\gl.jpg')
 
     # field Current Address
-    browser.element('#currentAddress').should(be.blank).type\
+    browser.element('#currentAddress').should(be.blank).type \
         ('This is\nmy current\naddress\nin New York\n USA')
 
     # field State
