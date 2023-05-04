@@ -1,17 +1,7 @@
 from selene import browser, have, be
 
+from wrm_selene_python_hw_10.model.pages.registration_page import RegistrationPage
 from wrm_selene_python_hw_10.resource import path
-
-class RegistrationPage:
-    def open(self):
-        browser.open('/automation-practice-form')
-        browser.element('.practice-form-wrapper h5').should(have.exact_text('Student Registration Form'))
-
-        browser.element('#fixedban').execute_script('element.remove()')
-        browser.element('.sidebar-content').execute_script('element.remove()')
-
-
-        browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
 
 """
 BDD = Given, When, Then
