@@ -1,5 +1,6 @@
 from selene import browser, have, be
-from os.path import abspath, dirname
+
+from wrm_selene_python_hw_10.resource import path
 
 # BDD = Given, When, Then
 """
@@ -56,7 +57,7 @@ def test_student_registration_form(browser_control):
     browser.all('[for^=hobbies-checkbox]').element_by(have.text('Reading')).should(be.clickable).click()
 
     # field Picture
-    browser.element('#uploadPicture').send_keys(dirname(abspath(__file__)) + r'\resources\gl.jpg')
+    browser.element('#uploadPicture').send_keys(path('gl.jpg'))
 
     # field Current Address
     browser.element('#currentAddress').should(be.blank).with_(set_value_by_js=True).set_value\
