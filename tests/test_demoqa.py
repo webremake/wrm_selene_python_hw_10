@@ -2,8 +2,19 @@ from selene import browser, have, be
 
 from wrm_selene_python_hw_10.resource import path
 
-# BDD = Given, When, Then
+class RegistrationPage:
+    def open(self):
+        browser.open('/automation-practice-form')
+        browser.element('.practice-form-wrapper h5').should(have.exact_text('Student Registration Form'))
+
+        browser.element('#fixedban').execute_script('element.remove()')
+        browser.element('.sidebar-content').execute_script('element.remove()')
+
+
+        browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+
 """
+BDD = Given, When, Then
 Given (дано) — ситуация выглядит вот так: есть какое-то состояние до того, как пользователь вошел в сценарий.
 When (когда) — что-то происходит: пользователь совершает какие-то действия.
 Then (тогда) — теперь ситуация выглядит по-другому: система реагирует на пользовательские действия.
@@ -12,22 +23,8 @@ Then (тогда) — теперь ситуация выглядит по-дру
 
 def test_student_registration_form(browser_control):
     # GIVEN
-    browser.open('/automation-practice-form')
-    browser.element('.practice-form-wrapper h5').should(have.exact_text('Student Registration Form'))
-
-    """
-    # browser.execute_script('document.querySelector("#fixedban").remove()')
-    """
-    browser.element('#fixedban').execute_script('element.remove()')
-    browser.element('.sidebar-content').execute_script('element.remove()')
-
-    '''
-    # удалять элемент дизайна каким является футер плохо, лучше сделать клик ч-з JS 
-    browser.element('footer').execute_script('element.remove()')
-    '''
-
-
-    browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+    registration_page = RegistrationPage()
+    registration_page.open()
 
 
     # WHEN
