@@ -1,66 +1,26 @@
 from selene import browser, have, be
 
 from wrm_selene_python_hw_10.model.pages.registration_page import RegistrationPage
-from wrm_selene_python_hw_10.resource import path
-
-"""
-BDD = Given, When, Then
-Given (дано) — ситуация выглядит вот так: есть какое-то состояние до того, как пользователь вошел в сценарий.
-When (когда) — что-то происходит: пользователь совершает какие-то действия.
-Then (тогда) — теперь ситуация выглядит по-другому: система реагирует на пользовательские действия.
-"""
-
 
 def test_student_registration_form(browser_control):
     # GIVEN
     registration_page = RegistrationPage()
     registration_page.open()
 
-
     # WHEN
-    browser.element('#firstName').should(be.blank).type('Jon')
-    browser.element('#lastName').should(be.blank).type('Dir')
-
-    browser.element('#userEmail').should(be.blank).type('jondir@example.com')
-
-    browser.all('[for^=gender-radio]').element_by(have.text('Male')).click()
-
-    browser.element('#userNumber').should(be.blank).type('5296846163')
-
-    browser.element('#dateOfBirthInput').click()
-    browser.element('.react-datepicker__month-select').type('May')
-    browser.element('.react-datepicker__year-select').type('1957')
-    browser.element(f'.react-datepicker__day--0{12}').click()
-
-    '''
-    # если хотим проверить работает ли авто дополнение
-    browser.all('.subjects-auto-complete__menu-list>.subjects-auto-complete__option').element_by\
-        (have.exact_text('Computer Science')).click()
-    '''
-    browser.element('#subjectsInput').type('Commerce').press_enter()
-
-    # field Hobbies
-    # browser.element('[for="hobbies-checkbox-2"]').should(be.clickable).click()
-    browser.all('[for^=hobbies-checkbox]').element_by(have.text('Reading')).should(be.clickable).click()
-
-    # field Picture
-    browser.element('#uploadPicture').send_keys(path('gl.jpg'))
-
-    # field Current Address
-    browser.element('#currentAddress').should(be.blank).with_(set_value_by_js=True).set_value\
-        ('This is\nmy current\naddress\nin New York\n USA')
-
-    # field State
-    browser.element('#react-select-3-input').send_keys("a")
-    browser.all('[id^="react-select-3-option"]').element_by(have.exact_text('Haryana')).click()
-
-    # field City
-    browser.element('#react-select-4-input').send_keys("a")
-    browser.all('[id^="react-select-4-option"]').element_by(have.exact_text('Karnal')).click()
-    # end section
-
-    # submit form
-    browser.element('#submit').with_(click_by_js=True).click()
+    registration_page.fill_first_name('Jon')
+    registration_page.fill_last_name('Dir')
+    registration_page.fill_email('jondir@example.com')
+    registration_page.select_gender('Male')
+    registration_page.fill_mobile_phone('5296846163')
+    registration_page.fill_date_of_birth('1957', 'May', '12')
+    registration_page.fill_subjects('Commerce')
+    registration_page.select_hobbies('Reading')
+    registration_page.upload_picture('gl.jpg')
+    registration_page.fill_current_address('This is my current address in New York USA')
+    registration_page.select_state('Haryana')
+    registration_page.select_city('Karnal')
+    registration_page.submit()
 
     # THEN
     # section CHECK IFRAME TABLE
