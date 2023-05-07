@@ -1,9 +1,34 @@
 from selene import browser, have, be
-
 from wrm_selene_python_hw_10.resource import path
+from wrm_selene_python_hw_10.data.users import User
 
 
 class RegistrationPage:
+    def __init__(self,):
+        self.first_name = browser.element('#firstName')
+        self.last_name = browser.element('#lastName')
+        self.email = browser.element('#userEmail')
+        self.gender = browser.all('[for^=gender-radio]')
+        self.mobile_phone = browser.element('#userNumber')
+
+        self.date_of_birth = browser.element('#dateOfBirthInput')
+        self.month_of_birth = browser.element('.react-datepicker__month-select')
+        self.year_of_birth = browser.element('.react-datepicker__year-select')
+        # self.day_of_birth = browser.element(f'.react-datepicker__day--0{user.day_of_birth}')
+
+        self.subjects = browser.element('#subjectsInput')
+        self.hobbies = browser.all('[for^=hobbies-checkbox]')
+        self.picture = browser.element('#uploadPicture')
+        self.current_address = browser.element('#currentAddress')
+
+        self.state_input = browser.element('#react-select-3-input')
+        self.state_options = browser.all('[id^="react-select-3-option"]')
+
+        self.city_input = browser.element('#react-select-4-input')
+        self.city_option = browser.all('[id^="react-select-4-option"]')
+
+        self.submit_button = browser.element('#submit')
+
     def open(self):
         browser.open('/automation-practice-form')
         browser.element('.practice-form-wrapper h5').should(
@@ -16,69 +41,109 @@ class RegistrationPage:
         browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
         return self
 
-    def fill_first_name(self, value):
-        browser.element('#firstName').should(be.blank).type(value)
-        return self
+    # def fill_date_of_birth(self, year, month, day):
+    #     browser.element('#dateOfBirthInput').click()
+    #     browser.element('.react-datepicker__month-select').type(month)
+    #     browser.element('.react-datepicker__year-select').type(year)
+    #     browser.element(f'.react-datepicker__day--0{day}').click()
+    #     return self
 
-    def fill_last_name(self, value):
-        browser.element('#lastName').should(be.blank).type(value)
-        return self
+    def register(self, user: User):
+        self.first_name.should(be.blank).type(user.first_name)
+        self.last_name.should(be.blank).type(user.last_name)
+        self.email.should(be.blank).type(user.email)
+        self.gender.element_by(have.text(user.gender)).click()
+        self.mobile_phone.should(be.blank).type(user.mobile_phone)
 
-    def fill_email(self, address):
-        browser.element('#userEmail').should(be.blank).type(address)
-        return self
+        self.date_of_birth.click()
+        self.month_of_birth.type(user.month_of_birth)
+        self.year_of_birth.type(user.year_of_birth)
+        # self.day_of_birth.click()
+        browser.element(f'.react-datepicker__day--0{user.day_of_birth}').click()
 
-    def select_gender(self, value):
-        browser.all('[for^=gender-radio]').element_by(have.text(value)).click()
-        return self
-
-    def fill_mobile_phone(self, number):
-        browser.element('#userNumber').should(be.blank).type(number)
-        return self
-
-    def fill_date_of_birth(self, year, month, day):
-        browser.element('#dateOfBirthInput').click()
-        browser.element('.react-datepicker__month-select').type(month)
-        browser.element('.react-datepicker__year-select').type(year)
-        browser.element(f'.react-datepicker__day--0{day}').click()
-        return self
-
-    def fill_subjects(self, text):
-        browser.element('#subjectsInput').type(text).press_enter()
-        return self
-
-    def select_hobbies(self, value):
-        browser.all('[for^=hobbies-checkbox]').element_by(
-            have.text(value)).should(be.clickable).click()
-        return self
-
-    def upload_picture(self, file):
-        browser.element('#uploadPicture').send_keys(path(file))
-        return self
-
-    def fill_current_address(self, text):
-        browser.element('#currentAddress').should(be.blank).with_(set_value_by_js=True).set_value(
-            text
+        self.subjects.type(user.subjects).press_enter()
+        self.hobbies.element_by(
+            have.text(user.hobbies)).should(be.clickable).click()
+        self.picture.send_keys(path(user.picture))
+        self.current_address.should(be.blank).with_(set_value_by_js=True).set_value(
+            user.current_address
         )
-        return self
+        self.state_input.send_keys("a")
+        self.state_options.element_by(have.exact_text(user.state)).click()
 
-    def select_state(self, name):
-        browser.element('#react-select-3-input').send_keys("a")
-        browser.all('[id^="react-select-3-option"]').element_by(
-            have.exact_text(name)
-        ).click()
-        return self
+        self.city_input.send_keys("a")
+        self.city_option.element_by(have.exact_text(user.city)).click()
 
-    def select_city(self, name):
-        browser.element('#react-select-4-input').send_keys("a")
-        browser.all('[id^="react-select-4-option"]').element_by(
-            have.exact_text(name)
-        ).click()
-        return self
+        self.submit_button.with_(click_by_js=True).click()
 
-    def click_submit(self):
-        browser.element('#submit').with_(click_by_js=True).click()
-        return self
+
+    '''
+    # def fill_first_name(self, value):
+    #     browser.element('#firstName').should(be.blank).type(value)
+    #     return self
+
+    # def fill_last_name(self, value):
+    #     browser.element('#lastName').should(be.blank).type(value)
+    #     return self
+    
+    # def fill_email(self, address):
+    #     browser.element('#userEmail').should(be.blank).type(address)
+    #     return self
+    
+    # def select_gender(self, value):
+    #     browser.all('[for^=gender-radio]').element_by(have.text(value)).click()
+    #     return self
+    
+    # def fill_mobile_phone(self, number):
+    # browser.element('#userNumber').should(be.blank).type(number)
+    # return self
+    
+    # def fill_date_of_birth(self, year, month, day):
+    #     browser.element('#dateOfBirthInput').click()
+    #     browser.element('.react-datepicker__month-select').type(month)
+    #     browser.element('.react-datepicker__year-select').type(year)
+    #     browser.element(f'.react-datepicker__day--0{day}').click()
+    #     return self
+    
+    # def fill_subjects(self, text):
+    #     browser.element('#subjectsInput').type(text).press_enter()
+    #     return self
+    
+        # def select_hobbies(self, value):
+    #     browser.all('[for^=hobbies-checkbox]').element_by(
+    #         have.text(value)).should(be.clickable).click()
+    #     return self
+    
+    # def upload_picture(self, file):
+    #     browser.element('#uploadPicture').send_keys(path(file))
+    #     return self
+    
+    # def fill_current_address(self, text):
+    #     browser.element('#currentAddress').should(be.blank).with_(set_value_by_js=True).set_value(
+    #         text
+    #     )
+    #     return self
+    
+    # def select_state(self, name):
+    #     browser.element('#react-select-3-input').send_keys("a")
+    #     browser.all('[id^="react-select-3-option"]').element_by(
+    #         have.exact_text(name)
+    #     ).click()
+    #     return self
+    
+    # def select_city(self, name):
+    # browser.element('#react-select-4-input').send_keys("a")
+    # browser.all('[id^="react-select-4-option"]').element_by(
+    #     have.exact_text(name)
+    # ).click()
+    # return self
+    
+    # def click_submit(self):
+    # browser.element('#submit').with_(click_by_js=True).click()
+    # return self
+    '''
+
+
 
     def should_thanks_frame_have_title(self, text):
         browser.element('.modal-header').should(have.text(text))
