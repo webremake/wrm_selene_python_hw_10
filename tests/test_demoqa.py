@@ -1,4 +1,5 @@
 from wrm_selene_python_hw_10.model.pages.registration_page import RegistrationPage
+from wrm_selene_python_hw_10.data import users
 
 
 def test_student_registration_form(browser_control):
@@ -7,18 +8,19 @@ def test_student_registration_form(browser_control):
     registration_page.open()
 
     # WHEN
-    registration_page\
-        .fill_first_name('Jon').fill_last_name('Dir')\
-        .fill_email('jondir@example.com')\
-        .select_gender('Male')\
-        .fill_mobile_phone('5296846163')\
-        .fill_date_of_birth('1957', 'May', '12')\
-        .fill_subjects('Commerce')\
-        .select_hobbies('Reading')\
-        .upload_picture('gl.jpg')\
-        .fill_current_address('This is my current address in New York USA')\
-        .select_state('Haryana').select_city('Karnal')\
-        .click_submit()
+    registration_page.register(users.student)
+    # registration_page\
+    #     .fill_first_name(users.student.first_name).fill_last_name(users.student.last_name)\
+    #     .fill_email('jondir@example.com')\
+    #     .select_gender('Male')\
+    #     .fill_mobile_phone('5296846163')\
+    #     .fill_date_of_birth('1957', 'May', '12')\
+    #     .fill_subjects('Commerce')\
+    #     .select_hobbies('Reading')\
+    #     .upload_picture('gl.jpg')\
+    #     .fill_current_address('This is my current address in New York USA')\
+    #     .select_state('Haryana').select_city('Karnal')\
+    #     .click_submit()
 
     # THEN
     registration_page\
