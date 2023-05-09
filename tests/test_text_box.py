@@ -1,15 +1,18 @@
 from selene import browser, have, be
 from wrm_selene_python_hw_10.data import users
 
+class TextPage:
+    def __init__(self):
+       pass
 
 def test_text_box():
     # GIVEN
     browser.open('/text-box')
 
-    # Remove advertising banners
-    browser.execute_script('document.querySelector("#fixedban").remove()')
-    # browser.element('footer').execute_script('element.remove()')
-    browser.element('.sidebar-content').execute_script('element.remove()')
+    # # Remove advertising banners
+    # browser.execute_script('document.querySelector("#fixedban").remove()')
+    # # browser.element('footer').execute_script('element.remove()')
+    # browser.element('.sidebar-content').execute_script('element.remove()')
 
     # WHEN
     browser.element('#userName').should(be.blank).type(f'{users.student.first_name} {users.student.last_name}')
