@@ -1,31 +1,17 @@
-from selene import browser, have, be
+from selene import browser, have
+from wrm_selene_python_hw_10.model.pages.text_box_page import TextBox
 from wrm_selene_python_hw_10.data import users
 
-class TextPage:
-    def __init__(self):
-       pass
-
-def test_text_box():
+def test_text_box(browser_control):
     # GIVEN
-    browser.open('/text-box')
-
-    # # Remove advertising banners
-    # browser.execute_script('document.querySelector("#fixedban").remove()')
-    # # browser.element('footer').execute_script('element.remove()')
-    # browser.element('.sidebar-content').execute_script('element.remove()')
+    text_box = TextBox()
+    text_box.open()
 
     # WHEN
-    browser.element('#userName').should(be.blank).type(f'{users.student.first_name} {users.student.last_name}')
-    browser.element('#userEmail').should(be.blank).type(users.student.email)
-    browser.element('#currentAddress').should(be.blank).type(users.student.current_address)
-    browser.element('#permanentAddress').should(be.blank).type(users.student.current_address)
-
-    browser.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-
-    browser.element('#submit').click()
+    text_box.register(users.student)
 
     # THEN
-    browser.element('#output #name').should(have.text(f'{users.student.first_name} {users.student.last_name}'))
+    browser.element('#output #name').should(have.text(users.student.full_name))
     browser.element('#output #email').should(have.text(users.student.email))
     browser.element('#output #currentAddress').should(have.text(users.student.current_address))
     browser.element('#output #permanentAddress').should(have.text(users.student.current_address))
