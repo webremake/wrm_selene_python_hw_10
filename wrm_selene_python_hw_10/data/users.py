@@ -5,6 +5,7 @@ import dataclasses
 class User:
     first_name: str
     last_name: str
+    full_name: str = dataclasses.field(init=False)
     email: str
     gender: str
     mobile_phone: str
@@ -17,6 +18,9 @@ class User:
     current_address: str
     state: str
     city: str
+
+    def __post_init__(self):
+        self.full_name = f'{self.first_name} {self.last_name}'
 
 
 student = User(
