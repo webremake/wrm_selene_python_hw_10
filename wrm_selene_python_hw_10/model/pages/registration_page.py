@@ -76,7 +76,7 @@ class RegistrationPage:
         ).click()
         return self
 
-    def click_submit(self):
+    def submit(self):
         browser.element('#submit').with_(click_by_js=True).click()
         return self
 

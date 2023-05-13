@@ -19,7 +19,7 @@ def test_student_registration_form(browser_control):
         .upload_picture('gl.jpg')\
         .fill_current_address('This is my current address in New York USA')\
         .select_state('Haryana').select_city('Karnal')\
-        .click_submit()
+        .submit()
 
     # THEN
     registration_page\
