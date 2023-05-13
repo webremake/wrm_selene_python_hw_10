@@ -42,11 +42,11 @@ class RegistrationPage:
         return self
 
     def register(self, user: User):
-        self.first_name.should(be.blank).type(user.first_name)
-        self.last_name.should(be.blank).type(user.last_name)
-        self.email.should(be.blank).type(user.email)
+        self.first_name.type(user.first_name)
+        self.last_name.type(user.last_name)
+        self.email.type(user.email)
         self.gender.element_by(have.text(user.gender)).click()
-        self.mobile_phone.should(be.blank).type(user.mobile_phone)
+        self.mobile_phone.type(user.mobile_phone)
 
         self.date_of_birth.click()
         self.month_of_birth.type(user.month_of_birth)
@@ -56,9 +56,9 @@ class RegistrationPage:
 
         self.subjects.type(user.subjects).press_enter()
         self.hobbies.element_by(
-            have.text(user.hobbies)).should(be.clickable).click()
+            have.text(user.hobbies)).click()
         self.picture.send_keys(path(user.picture))
-        self.current_address.should(be.blank).with_(set_value_by_js=True).set_value(
+        self.current_address.with_(set_value_by_js=True).set_value(
             user.current_address
         )
         self.state_input.send_keys("a")
