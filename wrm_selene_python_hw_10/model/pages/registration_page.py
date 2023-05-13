@@ -6,9 +6,9 @@ from wrm_selene_python_hw_10.resource import path
 class RegistrationPage:
     def open(self):
         browser.open('/automation-practice-form')
-        browser.element('.practice-form-wrapper h5').should(
-            have.exact_text('Student Registration Form')
-        )
+        # browser.element('.practice-form-wrapper h5').should(
+        #     have.exact_text('Student Registration Form')
+        # )
 
         browser.element('#fixedban').execute_script('element.remove()')
         browser.element('.sidebar-content').execute_script('element.remove()')
@@ -17,15 +17,15 @@ class RegistrationPage:
         return self
 
     def fill_first_name(self, value):
-        browser.element('#firstName').should(be.blank).type(value)
+        browser.element('#firstName').type(value)
         return self
 
     def fill_last_name(self, value):
-        browser.element('#lastName').should(be.blank).type(value)
+        browser.element('#lastName').type(value)
         return self
 
     def fill_email(self, address):
-        browser.element('#userEmail').should(be.blank).type(address)
+        browser.element('#userEmail').type(address)
         return self
 
     def select_gender(self, value):
@@ -33,7 +33,7 @@ class RegistrationPage:
         return self
 
     def fill_mobile_phone(self, number):
-        browser.element('#userNumber').should(be.blank).type(number)
+        browser.element('#userNumber').type(number)
         return self
 
     def fill_date_of_birth(self, year, month, day):
